@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Frontend Mentor | Todo app</title>
+  </head>
+
+  <body>
+    <h1>
+      <span class="topic">TODO</span>
+      <img id="theme" src="./images/icon-moon.svg" alt="moon-icon" />
+    </h1>
+
+    <div class="todo">
+      <button class="btn-add" id="add-task">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="25"
+          height="24"
+          viewBox="0 0 25 24"
+          id="oval"
+          fill="none"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="12"
+            fill="var(--listSectionBackground)"
+            stroke="var(--bottomBorder)"
+          />
+        </svg>
+      </button>
+      <input id="input-box" type="text" placeholder=" Create a new todo..." />
+    </div>
+
+    <section id="tasks">
+      <ul id="lists"></ul>
+      <div class="divparag">
+        <p class="parag"></p>
+        <div class="cent">
+          <button class="sett">All</button>
+          <button class="act">Active</button>
+          <button class="ctd">Completed</button>
+        </div>
+        <button class="cc">Clear Completed</button>
+      </div>
+    </section>
+
+    <footer>Drag and drop to reorder list</footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
