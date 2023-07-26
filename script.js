@@ -12,6 +12,8 @@ function addTask() {
   } else {
     let li = document.createElement('li');
     li.innerHTML = inputBox.value;
+    li.setAttribute('draggable', true);
+    li.classList.add('draggable');
     listContainer.appendChild(li);
     var span = document.createElement('span');
     span.innerHTML = '\u00d7';
@@ -29,6 +31,8 @@ document.addEventListener('keydown', function (event) {
   } else {
     let li = document.createElement('li');
     li.innerHTML = inputBox.value;
+    li.setAttribute('draggable', true);
+    li.classList.add('draggable');
     listContainer.appendChild(li);
     var span = document.createElement('span');
     span.innerHTML = '\u00d7';
@@ -103,10 +107,8 @@ theme.addEventListener('click', () => {
   darkMode = localStorage.getItem('darkMode');
   if (darkMode !== 'enabled') {
     darkTheme();
-    console.log(darkMode);
   } else {
     lightTheme();
-    console.log(darkMode);
   }
 });
 
@@ -142,3 +144,20 @@ document.addEventListener('DOMContentLoaded', function () {
   listElement.addEventListener('DOMNodeInserted', updateItemCount);
   listElement.addEventListener('DOMNodeRemoved', updateItemCount);
 });
+
+//Dragging
+const draggables = document.querySelectorAll('.draggable');
+
+for (drags of draggables) {
+  drags.addEventListener('dragstart', function (e) {
+    let selected = e.target;
+
+    listContainer.addEventListener('dragover', function (e) {
+      e.preventDefault();
+    });
+    listContainer.addEventListener('drop', function (e) {
+      listContainer.appendChild(selected);
+      selected = null;
+    });
+  });
+}
