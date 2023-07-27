@@ -30,7 +30,7 @@
 }
 @media (min-width: 376px) and (max-width: 1440px) {
   body {
-    background-image: url(./images/bg-desktop-light.jpg);
+    /*   background-image: url(./images/bg-desktop-light.jpg); */
     background-repeat: no-repeat;
     background-size: 100%;
     /*   position: relative; */
@@ -273,7 +273,7 @@ ul li:hover::after {
 /* Styles specific to mobile */
 @media (max-width: 375px) {
   body {
-    background-image: url(./images/bg-mobile-light.jpg);
+    /*   background-image: url(./images/bg-mobile-light.jpg); */
     background-repeat: no-repeat;
     background-size: 100%;
     width: 100%;
@@ -425,7 +425,8 @@ ul li:hover::after {
   ul li {
     list-style: none;
     font-size: inherit;
-    padding: 12px 8px 12px 7rem;
+    padding: 15px 8px 12px 4rem;
+    height: 3rem;
     user-select: none;
     cursor: pointer;
     color: var(--listTextColor);
@@ -449,7 +450,7 @@ ul li:hover::after {
     background-size: cover;
     background-position: center;
     top: 0.5rem;
-    left: 2.5rem;
+    left: 1.5rem;
   }
   ul li:hover::before {
     background-image: url(./images/Group-4-hover.svg);
@@ -483,20 +484,20 @@ ul li:hover::after {
     background-image: url(./images/Group\ 4.svg);
   }
 
-  ul li span {
+  ul li img {
     position: absolute;
-    right: 0;
-    top: 5px;
-    width: 40px;
-    height: 40px;
+    right: 10px;
+    top: 9px;
+    width: 20px;
+    height: 20px;
     font-size: 22px;
     line-height: 40px;
     text-align: center;
     opacity: 10%;
   }
 
-  ul li span:hover {
-    opacity: 100%;
+  ul li img:hover {
+    opacity: 50%;
   }
 
   footer {

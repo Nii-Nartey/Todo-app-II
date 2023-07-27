@@ -4,7 +4,8 @@ let listContainer = document.getElementById('lists');
 
 // Function to update the item count
 function updateItemCount() {
-  const itemCount = document.querySelectorAll('#lists li').length;
+  const uncheckedItems = document.querySelectorAll('#lists li:not(.checked)');
+  const itemCount = uncheckedItems.length;
   document.querySelector('.parag').textContent = itemCount + ' items left';
 }
 
@@ -110,7 +111,35 @@ theme.addEventListener('click', () => {
   }
 });
 
-// Get the button element by its class
+// Function to set the background image based on the  screen width
+function setBackground() {
+  const isMobile = window.matchMedia('(max-width: 375px)').matches;
+  const darkMode = localStorage.getItem('darkMode');
+
+  if (isMobile) {
+    if (darkMode === 'enabled') {
+      document.body.style.backgroundImage =
+        "url('./images/bg-mobile-dark.jpg')";
+    } else {
+      document.body.style.backgroundImage =
+        "url('./images/bg-mobile-light.jpg')";
+    }
+  } else {
+    if (darkMode === 'enabled') {
+      document.body.style.backgroundImage =
+        "url('./images/bg-desktop-dark.jpg')";
+    } else {
+      document.body.style.backgroundImage =
+        "url('./images/bg-desktop-light.jpg')";
+    }
+  }
+}
+// Call the setBackground function when the page loads, when the theme is toggled, and when the window size changes
+window.addEventListener('DOMContentLoaded', setBackground);
+theme.addEventListener('click', setBackground);
+window.addEventListener('resize', setBackground);
+
+/* // Get the button element by its class
 const button = document.querySelector('.sett');
 
 // Add a click event listener to the button
@@ -118,7 +147,7 @@ button.addEventListener('click', function () {
   const liElements = document.querySelectorAll('ul li');
   liElements.forEach((li) => li.classList.toggle('checked'));
   saveData();
-});
+}); */
 
 // Function to update the paragraph content with the current count
 /* function updateItemCount() {
@@ -154,3 +183,41 @@ for (drags of draggables) {
     });
   });
 }
+
+// Function to show and hide list items based on the clicked button
+function filterListItems(buttonType) {
+  const listItems = document.querySelectorAll('ul li');
+
+  listItems.forEach((li) => {
+    if (buttonType === 'all') {
+      li.style.display = 'block'; // Show all list items
+    } else if (buttonType === 'active') {
+      li.style.display = li.classList.contains('checked') ? 'none' : 'block'; // Showing list items without checked class name
+    } else if (buttonType === 'completed') {
+      li.style.display = li.classList.contains('checked') ? 'block' : 'none'; // Showing list items with checked class name
+    }
+  });
+  updateItemCount();
+}
+
+// Function to clear completed items
+function clearCompleted() {
+  const completedItems = document.querySelectorAll('ul li.checked');
+
+  // Removing list items with checked class
+  completedItems.forEach((item) => {
+    item.remove();
+  });
+  updateItemCount();
+}
+
+// Adding click event listeners to the buttons
+const allButton = document.querySelector('.sett');
+const activeButton = document.querySelector('.act');
+const completedButton = document.querySelector('.ctd');
+const clearCompletedButton = document.querySelector('.cc');
+
+allButton.addEventListener('click', () => filterListItems('all'));
+activeButton.addEventListener('click', () => filterListItems('active'));
+completedButton.addEventListener('click', () => filterListItems('completed'));
+clearCompletedButton.addEventListener('click', clearCompleted);
