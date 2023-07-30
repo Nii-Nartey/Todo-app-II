@@ -22,6 +22,7 @@ function addTask() {
     var span = document.createElement('img');
     span.setAttribute('src', './images/icon-cross.svg');
     li.appendChild(span);
+    setupDragAndDrop();
   }
   inputBox.value = '';
   saveData();
@@ -45,6 +46,7 @@ document.addEventListener('keydown', function (event) {
       var span = document.createElement('img');
       span.setAttribute('src', './images/icon-cross.svg');
       li.appendChild(span);
+      setupDragAndDrop();
       inputBox.value = '';
       saveData();
       updateItemCount();
@@ -74,6 +76,7 @@ function saveData() {
 function showTask() {
   listContainer.innerHTML = localStorage.getItem('data');
   updateItemCount();
+  setupDragAndDrop();
 }
 //calling the showTask function
 showTask();
@@ -139,22 +142,6 @@ window.addEventListener('DOMContentLoaded', setBackground);
 theme.addEventListener('click', setBackground);
 window.addEventListener('resize', setBackground);
 
-/* // Get the button element by its class
-const button = document.querySelector('.sett');
-
-// Add a click event listener to the button
-button.addEventListener('click', function () {
-  const liElements = document.querySelectorAll('ul li');
-  liElements.forEach((li) => li.classList.toggle('checked'));
-  saveData();
-}); */
-
-// Function to update the paragraph content with the current count
-/* function updateItemCount() {
-  const itemCount = listContainer.children.length;
-  document.querySelector('.parag').textContent = itemCount + ' items left';
-} */
-
 // Get the <ul> element
 const listElement = document.querySelector('ul');
 
@@ -165,24 +152,28 @@ updateItemCount();
 listElement.addEventListener('DOMNodeInserted', updateItemCount);
 listElement.addEventListener('DOMNodeRemoved', updateItemCount);
 
-// Dragging
-const draggables = document.querySelectorAll('.draggable');
+// Function to set up Drag and Drop
+function setupDragAndDrop() {
+  const draggables = document.querySelectorAll('.draggable');
 
-for (drags of draggables) {
-  drags.addEventListener('dragstart', function (e) {
-    let selected = e.target;
+  for (drags of draggables) {
+    drags.addEventListener('dragstart', function (e) {
+      let selected = e.target;
 
-    listContainer.addEventListener('dragover', function (e) {
-      e.preventDefault();
+      listContainer.addEventListener('dragover', function (e) {
+        e.preventDefault();
+      });
+
+      listContainer.addEventListener('drop', function (e) {
+        listContainer.appendChild(selected);
+        selected = null;
+        updateItemCount();
+      });
     });
-
-    listContainer.addEventListener('drop', function (e) {
-      listContainer.appendChild(selected);
-      selected = null;
-      updateItemCount();
-    });
-  });
+  }
 }
+//Calling the showTask function when the page is loaded
+document.addEventListener('DOMContentLoaded', showTask);
 
 // Function to show and hide list items based on the clicked button
 function filterListItems(buttonType) {
@@ -192,9 +183,9 @@ function filterListItems(buttonType) {
     if (buttonType === 'all') {
       li.style.display = 'block'; // Show all list items
     } else if (buttonType === 'active') {
-      li.style.display = li.classList.contains('checked') ? 'none' : 'block'; // Showing list items without checked class name
+      li.style.display = li.classList.contains('checked') ? 'none' : 'block'; // Showing list items without checked class name. usin  Tenary Operators
     } else if (buttonType === 'completed') {
-      li.style.display = li.classList.contains('checked') ? 'block' : 'none'; // Showing list items with checked class name
+      li.style.display = li.classList.contains('checked') ? 'block' : 'none'; // Showing list items with checked class name. Tenary operator
     }
   });
   updateItemCount();
@@ -209,6 +200,7 @@ function clearCompleted() {
     item.remove();
   });
   updateItemCount();
+  saveData();
 }
 
 // Adding click event listeners to the buttons
